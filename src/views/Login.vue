@@ -13,11 +13,11 @@
                                 <form @submit.prevent="handleLogin">
                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="email">Email</label>
-                                        <input type="email" id="email" v-model="email"  class="form-control form-control-lg" required />
+                                        <input type="email" id="email" v-model="email"  class="form-control form-control-lg" required placeholder="example@example.com" />
                                     </div>
                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="password">Password</label>
-                                        <input type="password" id="password" v-model="password" class="form-control form-control-lg" required />
+                                        <input type="password" id="password" v-model="password" class="form-control form-control-lg" required placeholder="********" />
                                     </div>
                                     <!-- TODO: Add a way to reset passwords -->
                                     <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
