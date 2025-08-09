@@ -77,8 +77,8 @@ async function handleRegister() {
             email: email.value, 
             username: username.value, 
             password: password.value, 
-            confirmPassword: confirmPassword.value,
-            invite: invite.value
+            confirmPassword: confirmPassword.value
+            //invite: invite.value
          })
         router.push('/')
     } catch (err) {
