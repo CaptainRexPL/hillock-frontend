@@ -6,26 +6,19 @@
                     <div class="card bg-dark text-white" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
                             <div class="mb-md-5 mt-md-4 pb-5">
-                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                <p class="text-white-50 mb-5">Please enter your email and password!</p>
-                                <form @submit.prevent="handleLogin">
+                                <h2 class="fw-bold mb-2 text-uppercase">Reset your password</h2>
+                                <p class="text-white-50 mb-5">Please enter your email. If there is a Hillock account associated with it, you should receive an email with instructions on how to reset your password</p>
+                                <form @submit.prevent="handlePasswordResetRequest">
                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="email">Email</label>
                                         <input type="email" id="email" v-model="email"  class="form-control form-control-lg" required placeholder="example@example.com" />
                                     </div>
-                                    <div data-mdb-input-init class="form-outline form-white mb-4">
-                                        <label class="form-label" for="password">Password</label>
-                                        <input type="password" id="password" v-model="password" class="form-control form-control-lg" required placeholder="********" />
-                                    </div>
-                                    <p class="small mb-5 pb-lg-2">Forgot password? Reset it <RouterLink class="text-white-50 fw-bold" to="/reset/request">here</RouterLink></p>
                                     <button data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-outline-light btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Authorizing...' : 'Login' }}</button>
+                                        class="btn btn-outline-light btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Sending...' : 'Send password reset request' }}</button>
                                 </form>
                                 <p v-if="errorMessage" class="error">{{ errorMessage }}</p>             
                             </div>
-                            <div>
-                                <p class="mb-0">Don't have an account? <RouterLink class="text-white-50 fw-bold" to="/register">Register</RouterLink></p>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -36,27 +29,27 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useAuthStore } from '../stores/useAuthStore'
 import { useRouter, useRoute } from 'vue-router'
+import { accountApi } from '../api/account'
 
-const authStore = useAuthStore()
 const router = useRouter()
 const route = useRoute()
 
 const email = ref('')
-const password = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
-async function handleLogin() {
+async function handlePasswordResetRequest() {
     errorMessage.value = ''
     loading.value = true
     try {
-        await authStore.login({ email: email.value, password: password.value })
+        const response = await accountApi.requestPasswordReset({ email: email.value })
+        const { message } = response.data
+        console.log(message)
         const returnUrl = route.query.returnUrl || '/'
         router.push(returnUrl)
     } catch (err) {
-        errorMessage.value = err.message || 'Failed to log in'
+        errorMessage.value = err.message || 'Failed to send the request'
     } finally {
         loading.value = false
     }

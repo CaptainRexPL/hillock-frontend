@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="d-flex flex-column min-vh-100">
+  <div class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Hillock App</a>

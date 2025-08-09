@@ -5,6 +5,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
+import RequestPasswordReset from '../views/RequestPasswordReset.vue'
+import PerformPasswordReset from '../views/PerformPasswordReset.vue'
 
 const routes = [
     {
@@ -30,6 +32,18 @@ const routes = [
         name: 'Profile',
         component: Profile,
         meta: { requiresAuth: true }
+    },
+    {
+      path: '/reset/request',
+      name: 'requestReset',
+      component: RequestPasswordReset,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: '/reset/perform/:namespace/:token',
+      name: 'performReset',
+      component: PerformPasswordReset,
+      meta: { requiresAuth: false }
     }
 ]
 

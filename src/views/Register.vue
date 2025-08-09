@@ -27,12 +27,12 @@
                                         <label class="form-label" for="confirmPassword">Confirm password</label>
                                         <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control form-control-lg" required placeholder="********" />
                                     </div>
-                                    <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <!-- TODO: re-enable in the future -->
+                                    <!-- <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="invite">Invite code</label>
                                         <input type="text" id="invite" v-model="invite"  class="form-control form-control-lg" required />
-                                    </div>
-                                    <!-- TODO: Add a way to reset passwords -->
-                                    <!-- <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p> -->
+                                    </div> -->
+                                    <p class="small mb-5 pb-lg-2">Forgot password? Reset it <RouterLink class="text-white-50 fw-bold" to="/reset/request">here</RouterLink></p>
                                     
 
                                     <button data-mdb-button-init data-mdb-ripple-init
@@ -65,7 +65,7 @@ const email = ref('')
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const invite = ref('')
+// const invite = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 

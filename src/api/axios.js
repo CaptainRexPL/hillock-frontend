@@ -15,6 +15,19 @@ const instance = axios.create({
   ],
 })
 
+const rawAxios = axios.create({
+  baseURL: 'https://hillock.live',
+  transformResponse: [
+    (data) => {
+      try {
+        return JSONbig.parse(data)
+      } catch {
+        return data
+      }
+    },
+  ],
+})
+
 // Add the token to headers
 instance.interceptors.request.use((config) => {
   const auth = useAuthStore()
@@ -79,3 +92,4 @@ instance.interceptors.response.use(
 )
 
 export default instance
+export { rawAxios }
