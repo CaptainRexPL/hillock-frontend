@@ -13,10 +13,10 @@ export const accountApi = {
   requestPasswordReset(data) {
     return rawAxios.post('/account/reset/request', data)
   },
-  verifyPasswordReset({ namespace, token }) {
-    return rawAxios.get(`/account/reset/verify/${encodeURIComponent(namespace)}/${encodeURIComponent(token)}`)
+  verifyPasswordReset({ token }) {
+    return rawAxios.get(`/account/reset/verify/${encodeURIComponent(token)}`)
   },
-  performPasswordReset({ namespace, token, data }) {
-    return rawAxios.post(`/account/reset/perform/${encodeURIComponent(namespace)}/${encodeURIComponent(token)}`, data)
+  performPasswordReset({ token, data }) {
+    return rawAxios.post(`/account/reset/perform/${encodeURIComponent(token)}`, data)
   }
 }

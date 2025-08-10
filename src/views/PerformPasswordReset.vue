@@ -46,7 +46,6 @@ import { accountApi } from '../api/account'
 const router = useRouter()
 const route = useRoute()
 
-const namespace = route.params.namespace
 const token = route.params.token
 
 const loading = ref(true)
@@ -61,7 +60,7 @@ const errorMessage = ref('')
 
 onMounted(async () => {
   try {
-    const response = await accountApi.verifyPasswordReset({ namespace, token })  
+    const response = await accountApi.verifyPasswordReset({ token })  
 
     const { success, username, message } = response.data
 
@@ -81,8 +80,8 @@ async function handlePasswordReset() {
     errorMessage.value = ''
     loading.value = true
     try {
-        console.log('rrr', {namespace, token })
-        await accountApi.performPasswordReset({ namespace, token, data: { password: password.value, confirmPassword: confirmPassword.value } })
+        console.log('rrr', {token })
+        await accountApi.performPasswordReset({ token, data: { password: password.value, confirmPassword: confirmPassword.value } })
         const returnUrl = route.query.returnUrl || '/'
         router.push(returnUrl)
     } catch (err) {
