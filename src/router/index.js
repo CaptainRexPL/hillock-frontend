@@ -40,7 +40,7 @@ const routes = [
       meta: { requiresAuth: false }
     },
     {
-      path: '/reset/perform/:namespace/:token',
+      path: '/reset/perform/:token',
       name: 'performReset',
       component: PerformPasswordReset,
       meta: { requiresAuth: false }
