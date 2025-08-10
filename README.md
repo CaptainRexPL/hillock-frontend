@@ -39,7 +39,6 @@ npm run build
 ```
 
 ## TODO
-* add a proper way to set things up with an env file (currently everything is hard-coded lol)
 * add multiple new views to fully use all Hillock features
 * seriously change the visual design of the website
 

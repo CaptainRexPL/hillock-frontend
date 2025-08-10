@@ -3,7 +3,7 @@ import JSONbig from 'json-bigint'
 import { useAuthStore } from '../stores/useAuthStore'
 
 const instance = axios.create({
-  baseURL: 'https://hillock.live',
+  baseURL: import.meta.env.VITE_API_URL,
   transformResponse: [
     (data) => {
       try {
@@ -16,7 +16,7 @@ const instance = axios.create({
 })
 
 const rawAxios = axios.create({
-  baseURL: 'https://hillock.live',
+  baseURL: import.meta.env.VITE_API_URL,
   transformResponse: [
     (data) => {
       try {

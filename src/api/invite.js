@@ -2,21 +2,21 @@ import axios from './axios'
 
 export const inviteApi = {
   getAll() {
-    return axios.get('/api/invites')
+    return axios.get('/invites')
   },
   getById(id) {
-    return axios.get(`/api/invites/${id}`)
+    return axios.get(`/invites/${id}`)
   },
   getByCode(inviteCode) {
-    return axios.get(`/api/invites/code/${inviteCode}`)
+    return axios.get(`/invites/code/${inviteCode}`)
   },
   create(invite) {
-    return axios.post('/api/invites', invite)
+    return axios.post('/invites', invite)
   },
   update(id, invite) {
-    return axios.put(`/api/invites/${id}`, invite)
+    return axios.put(`/invites/${id}`, invite)
   },
   delete(id) {
-    return axios.delete(`/api/invites/${id}`)
+    return axios.delete(`/invites/${id}`)
   },
 }

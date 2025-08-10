@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from '../api/axios'
+import { accountApi } from '../api/account'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
       this.user = null
     },
     async login({ email, password }) {
-      const res = await axios.post('/api/account/login', { email, password })
+      const res = await accountApi.login({ email, password })
       this.setTokens({
         accessToken: res.data.accessToken,
         refreshToken: res.data.refreshToken,
@@ -42,8 +42,8 @@ export const useAuthStore = defineStore('auth', {
     async refreshTokenAction() {
       if (!this.refreshToken) throw new Error('No refresh token')
       try {
-        const res = await axios.post('/api/account/refreshToken', {
-          refreshToken: this.refreshToken,
+        const res = await accountApi.refreshToken({
+          refreshToken: this.refreshToken
         })
         this.setTokens({
           accessToken: res.data.accessToken,
