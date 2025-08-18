@@ -56,7 +56,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
 
-  console.log('beforeEach guard', auth.accessToken)
   if (auth.accessToken) {
     // Token is present
     return next()
