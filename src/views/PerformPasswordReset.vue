@@ -1,34 +1,38 @@
 <template>
-    <section class="d-flex flex-column justify-content-center align-items-center h-100 gradient-custom">
+    <section class="d-flex flex-column justify-content-center align-items-center h-100">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                    <div class="card">
                         <div class="card-body p-5 text-center">
                             <div class="mb-md-5 mt-md-4 pb-5">
                                 <h2 class="fw-bold mb-2 text-uppercase">Reset your password</h2>
                                 <div v-if="loading">Request verification...</div>
                                 <div v-else-if="!tokenValid">
-                                    <p style="color: red;">{{msg}}</p>
-                                    <button data-mdb-button-init data-mdb-ripple-init
-                                        class="btn btn-outline-light btn-lg px-5" type="button" @click="router.push('/')" :disabled="loading">Go back</button>
+                                    <p style="color: red;" class="mb-5">{{msg}}</p>
+                                    <button class="btn btn-outline-primary btn-lg px-5" type="button" @click="router.push('/')" :disabled="loading">Go back</button>
                                 </div>
                                 <div v-else>
-                                    <p class="text-white-50 mb-5">Welcome {{ user }}!<br> In order to set your new password, fill in both fields on this page with your new password</p>
+                                    <p class="mb-5">Welcome {{ user }}!<br> In order to set your new password, fill in both fields on this page with your new password</p>
                                     <form @submit.prevent="handlePasswordReset">
-                                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                                        <div class="form-group mb-4">
                                             <label class="form-label" for="password">New password</label>
-                                            <input type="password" id="password" v-model="password" class="form-control form-control-lg" required placeholder="********" />
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                                <input type="password" id="password" v-model="password" class="form-control input_pass" placeholder="password"/>
+                                            </div>
                                         </div>
-                                        <div data-mdb-input-init class="form-outline form-white mb-4">
+                                        <div class="form-group mb-4">
                                             <label class="form-label" for="confirmPassword">Confirm new password</label>
-                                            <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control form-control-lg" required placeholder="********" />
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                                <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control input_pass" placeholder="password"/>
+                                            </div>
                                         </div>
-                                        <button data-mdb-button-init data-mdb-ripple-init
-                                            class="btn btn-outline-light btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Resetting...' : 'Reset password' }}</button>
+                                        <button class="btn btn-outline-primary btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Resetting...' : 'Reset password' }}</button>
                                     </form>
                                     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
-                                </div>             
+                                </div>          
                             </div>
                         </div>
                     </div>
@@ -93,27 +97,6 @@ async function handlePasswordReset() {
 </script>
 
 <style scoped>
-.login {
-    max-width: 400px;
-    margin: 3rem auto;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.25rem;
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-}
-
-button {
-    padding: 0.5rem 1rem;
-    width: 100%;
-}
-
 .error {
     margin-top: 1rem;
     color: red;

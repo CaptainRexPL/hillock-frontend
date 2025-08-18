@@ -3,10 +3,11 @@ import { accountApi } from '../api/account'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    accessToken: localStorage.getItem('accessToken') || null,
-    refreshToken: localStorage.getItem('refreshToken') || null,
+    accessToken: null,
+    refreshToken: null,
     user: null,
   }),
+   persist: true,
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
   },
@@ -14,14 +15,10 @@ export const useAuthStore = defineStore('auth', {
     setTokens({ accessToken, refreshToken }) {
       this.accessToken = accessToken
       this.refreshToken = refreshToken
-      localStorage.setItem('accessToken', accessToken)
-      localStorage.setItem('refreshToken', refreshToken)
     },
     clearTokens() {
       this.accessToken = null
       this.refreshToken = null
-      localStorage.removeItem('accessToken')
-      localStorage.removeItem('refreshToken')
       this.user = null
     },
     async login({ email, password }) {

@@ -2,8 +2,9 @@
   <div class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Hillock App</a>
-
+        <RouterLink class="navbar-brand" to="/">
+          <img src="./assets/images/logo.png" alt="Hillock logo" title="Hillock logo - go to homepage" height="48"/>
+        </RouterLink>
         <button
           v-if="isLoggedIn"
           class="navbar-toggler"
@@ -23,10 +24,10 @@
           id="navbarSupportedContent"
         >
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item" :class="{ active: $route.path === '/' }" :aria-current="$route.path === '/' ? 'page' : null">
+            <!-- <li class="nav-item" :class="{ active: $route.path === '/' }" :aria-current="$route.path === '/' ? 'page' : null">
               <RouterLink class="nav-link" to="/">Home</RouterLink>
             </li>
-            <!-- <li class="nav-item" :class="{ active: $route.path === '/profile' }" :aria-current="$route.path === '/profile' ? 'page' : null">
+            <li class="nav-item" :class="{ active: $route.path === '/profile' }" :aria-current="$route.path === '/profile' ? 'page' : null">
               <RouterLink class="nav-link" to="/profile">Profile</RouterLink>
             </li> -->
           </ul>
@@ -78,3 +79,8 @@ function logout() {
   auth.logout(router)
 }
 </script>
+<style scoped>
+#app {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+</style>
