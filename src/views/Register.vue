@@ -40,10 +40,10 @@
                                         </div>
                                     </div>
                                     <!-- TODO: re-enable in the future -->
-                                    <!-- <div data-mdb-input-init class="form-outline form-white mb-4">
+                                    <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="invite">Invite code</label>
                                         <input type="text" id="invite" v-model="invite"  class="form-control form-control-lg" required />
-                                    </div> -->
+                                    </div>
                                     <p class="small mb-5 pb-lg-2">Forgot password? Reset it <RouterLink class="fw-bold" to="/reset/request">here</RouterLink></p>
                                     
 
@@ -76,7 +76,7 @@ const email = ref('')
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-// const invite = ref('')
+const invite = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 
@@ -88,8 +88,8 @@ async function handleRegister() {
             email: email.value, 
             username: username.value, 
             password: password.value, 
-            confirmPassword: confirmPassword.value
-            //invite: invite.value
+            confirmPassword: confirmPassword.value,
+            invite: invite.value
          })
         router.push('/')
     } catch (err) {
