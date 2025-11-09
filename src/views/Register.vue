@@ -39,7 +39,6 @@
                                             <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control form-control-lg" required placeholder="********" />
                                         </div>
                                     </div>
-                                    <!-- TODO: re-enable in the future -->
                                     <div data-mdb-input-init class="form-outline form-white mb-4">
                                         <label class="form-label" for="invite">Invite code</label>
                                         <input type="text" id="invite" v-model="invite"  class="form-control form-control-lg" required />
