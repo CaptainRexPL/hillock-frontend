@@ -18,7 +18,11 @@
                                     </div>
                                     <button class="btn btn-outline-primary btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Sending...' : 'Send password reset request' }}</button>
                                 </form>
-                                <p v-if="errorMessage" class="error">{{ errorMessage }}</p>             
+                                <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+                                <div v-else-if="success">
+                                    <p class="success">Successfully sent a request, check your email inbox</p>
+                                    <RouterLink class="btn btn-outline-primary btn-lg px-5" to="/">Return to the home page</RouterLink>
+                                </div>
                             </div>
 
                         </div>
@@ -31,7 +35,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import {useRouter, useRoute, RouterLink} from 'vue-router'
 import { accountApi } from '../api/account'
 
 const router = useRouter()
@@ -40,6 +44,7 @@ const route = useRoute()
 const email = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
+const success = ref(false)
 
 async function handlePasswordResetRequest() {
     errorMessage.value = ''
@@ -48,8 +53,7 @@ async function handlePasswordResetRequest() {
         const response = await accountApi.requestPasswordReset({ email: email.value })
         const { message } = response.data
         console.log(message)
-        const returnUrl = route.query.returnUrl || '/'
-        router.push(returnUrl)
+        success.value = true
     } catch (err) {
         errorMessage.value = err.message || 'Failed to send the request'
     } finally {
@@ -62,5 +66,9 @@ async function handlePasswordResetRequest() {
 .error {
     margin-top: 1rem;
     color: red;
+}
+.success {
+    margin-top: 1rem;
+    color: green;
 }
 </style>

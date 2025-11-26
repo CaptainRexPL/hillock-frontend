@@ -6,46 +6,39 @@
           <img src="./assets/images/logo.png" alt="Hillock logo" title="Hillock logo - go to homepage" height="48"/>
         </RouterLink>
         <button
-          v-if="isLoggedIn"
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+            v-if="isLoggedIn"
+            class="navbar-toggler"
+            type="button"
+            @click="toggleHamburger"
+            :aria-expanded="hamburgerOpen.toString()"
+            aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div
           v-if="isLoggedIn"
           class="collapse navbar-collapse justify-content-between"
+          :class="{ show: hamburgerOpen }"
           id="navbarSupportedContent"
         >
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <!-- <li class="nav-item" :class="{ active: $route.path === '/' }" :aria-current="$route.path === '/' ? 'page' : null">
-              <RouterLink class="nav-link" to="/">Home</RouterLink>
-            </li>
-            <li class="nav-item" :class="{ active: $route.path === '/profile' }" :aria-current="$route.path === '/profile' ? 'page' : null">
-              <RouterLink class="nav-link" to="/profile">Profile</RouterLink>
-            </li> -->
           </ul>
-
-          <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+          <ul class="navbar-nav me-3">
+            <li class="nav-item dropdown" ref="userDropdown">
+              <button
+                  class="nav-link dropdown-toggle btn btn-link"
+                  type="button"
+                  @click="toggleDropdown"
+                  :aria-expanded="isOpen.toString()"
               >
                 {{ auth.user?.username || 'Użytkownik' }}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end">
+              </button>
+
+              <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  :class="{ show: isOpen }">
                 <li>
-                  <RouterLink class="dropdown-item" to="/profile">Profile</RouterLink>
+                  <RouterLink class="dropdown-item" to="/profile" @click="closeDropdown">Profile</RouterLink>
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
@@ -67,16 +60,48 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useAuthStore } from './stores/useAuthStore'
 import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const auth = useAuthStore()
 const isLoggedIn = computed(() => !!auth.accessToken)
 const router = useRouter()
 
+const isOpen = ref(false)
+const userDropdown = ref(null)
+const hamburgerOpen = ref(false)
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
+
+function toggleDropdown() {
+  isOpen.value = !isOpen.value
+}
+
+function closeDropdown() {
+  isOpen.value = false
+}
+
+function toggleHamburger() {
+  hamburgerOpen.value = !hamburgerOpen.value
+}
+
 function logout() {
   auth.logout(router)
+}
+
+function handleClickOutside(event) {
+  const dropdownEl = userDropdown.value
+  if (dropdownEl && !dropdownEl.contains(event.target)) {
+    closeDropdown()
+  }
 }
 </script>
 <style scoped>

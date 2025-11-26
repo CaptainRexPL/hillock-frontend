@@ -5,7 +5,7 @@
       <p><strong>Username:</strong> {{ user.username }}</p>
       <p><strong>Email:</strong> {{ user.email }}</p>
       <p><strong>Roles:</strong> {{ user.roles.join(', ') }}</p>
-      <p><strong>Pokerscore:</strong> {{ user.pokerscore }}</p>
+      <p><strong>Pokerscore:</strong> {{ user.pokerScore }}</p>
       <p><strong>Last login:</strong> {{ formatDate(user.lastLoginTimestamp) }}</p>
     </div>
     <div v-else>

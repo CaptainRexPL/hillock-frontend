@@ -7,8 +7,15 @@ import Profile from '../views/Profile.vue'
 import Register from '../views/Register.vue'
 import RequestPasswordReset from '../views/RequestPasswordReset.vue'
 import PerformPasswordReset from '../views/PerformPasswordReset.vue'
+import DiscordLink from '../views/DiscordLink.vue';
 
 const routes = [
+    {
+        path: '/discord-link/:token',
+        name: 'linkDiscord',
+        component: DiscordLink,
+        meta: { requiresAuth: true }
+    },
     {
         path: '/',
         name: 'Home',

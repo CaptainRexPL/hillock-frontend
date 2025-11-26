@@ -5,9 +5,7 @@
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
-
                             <div class="mb-md-5 mt-md-4 pb-5">
-
                                 <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
                                 <p class="mb-5">Please enter your email and password!</p>
                                 <form @submit.prevent="handleRegister">
@@ -44,13 +42,11 @@
                                         <input type="text" id="invite" v-model="invite"  class="form-control form-control-lg" required />
                                     </div>
                                     <p class="small mb-5 pb-lg-2">Forgot password? Reset it <RouterLink class="fw-bold" to="/reset/request">here</RouterLink></p>
-                                    
-
                                     <button class="btn btn-outline-primary btn-lg px-5" type="submit" :disabled="loading"> {{ loading ? 'Registering...' : 'Register' }}</button>
                                 </form>
-                                <p v-if="errorMessage" class="error">{{ errorMessage }}</p>             
+                                <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+                                <p v-else-if="success" class="success">Account created successfully, please check your inbox</p>
                             </div>
-
                             <div>
                                 <p class="mb-0">Already have an account? <RouterLink class="fw-bold" to="/login">Login</RouterLink></p>
                             </div>
@@ -78,6 +74,7 @@ const confirmPassword = ref('')
 const invite = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
+const success = ref(false)
 
 async function handleRegister() {
     errorMessage.value = ''
@@ -90,7 +87,7 @@ async function handleRegister() {
             confirmPassword: confirmPassword.value,
             invite: invite.value
          })
-        router.push('/')
+        success.value = true
     } catch (err) {
         errorMessage.value = err.message || 'Failed to register'
     } finally {
@@ -103,5 +100,9 @@ async function handleRegister() {
 .error {
     margin-top: 1rem;
     color: red;
+}
+.success {
+    margin-top: 1rem;
+    color: green;
 }
 </style>
