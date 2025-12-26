@@ -22,9 +22,6 @@ export const profileApi = {
   removeRole(id, data) {
     return axios.delete(`/profile/role/${id}`, { data })
   },
-  getDiscordOAuthUrl() {
-    return axios.get('/profile/discordOAuthUrl')
-  },
   getDiscordData(token) {
     return axios.get(`/profile/discord/data`, { params: { token } })
   },

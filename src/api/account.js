@@ -8,7 +8,7 @@ export const accountApi = {
     return myAxios.post('/account/login', data)
   },
   refreshToken(data) {
-    return myAxios.post('/account/refreshToken', data)
+    return rawAxios.post('/account/refreshToken', data)
   },
   requestPasswordReset(data) {
     return rawAxios.post('/account/reset/request', data)

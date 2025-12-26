@@ -31,7 +31,7 @@
                   @click="toggleDropdown"
                   :aria-expanded="isOpen.toString()"
               >
-                {{ auth.user?.username || 'Użytkownik' }}
+                {{ auth.user?.username || 'User' }}
               </button>
 
               <ul

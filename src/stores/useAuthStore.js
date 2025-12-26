@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { accountApi } from '../api/account'
+import { profileApi } from '../api/profile'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -7,7 +8,9 @@ export const useAuthStore = defineStore('auth', {
     refreshToken: null,
     user: null,
   }),
-   persist: true,
+  persist: {
+    pick: ['accessToken', 'refreshToken']
+  },
   getters: {
     isLoggedIn: (state) => !!state.accessToken,
   },
@@ -52,5 +55,48 @@ export const useAuthStore = defineStore('auth', {
         throw e
       }
     },
+    async getMe() {
+      try {
+        const res = await profileApi.getMe()
+        this.user = res.data
+        return res
+      } catch (e) {
+        this.user = null
+        throw e
+      }
+    },
+    async updateProfile(data) {
+      const payload = {}
+      for (const key in data) {
+        if (data[key] !== undefined && data[key] !== null) {
+          payload[key] = data[key]
+        }
+      }
+
+      try {
+        const res = await profileApi.update(payload)
+
+        if (res.data?.success === true && res.data?.user) {
+          this.user = { ...this.user, ...res.data.user }
+        }
+
+        return res
+      } catch (err) {
+        console.error('Profile update failed', err)
+        throw err
+      }
+    },
+    async unlinkDiscordAccount() {
+      try {
+        const res = await profileApi.unlink()
+        if (res.status === 204) {
+          console.log('Unlinked discord account')
+          return true
+        }
+      } catch (err) {
+        console.error('Profile unlink failed', err)
+        throw err
+      }
+    }
   },
 })

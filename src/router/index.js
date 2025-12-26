@@ -62,30 +62,34 @@ const router = createRouter({
 // Router Guard
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
+    if (to.path === '/login') {
+        if (auth.accessToken && !auth.user) {
+            try {
+                await auth.getMe()
+            } catch {
+                return next()
+            }
+        }
+        if (auth.user) {
+            return next({ path: '/' })
 
-  if (auth.accessToken) {
-    // Token is present
-    return next()
-  }
-
-  if (to.meta.requiresAuth) {
-    // Token is not present, but refresh is present
-    if (auth.refreshToken) {
-      try {
-        await auth.refreshTokenAction()
-        return next()
-      } catch (err) {
-        // Failed to refresh (in most cases, it means that the token has expired) – redirect to login
-        return next({ path: '/login', query: { returnUrl: to.fullPath } })
-      }
-    } else {
-      // Not logged in and no refresh token either
-      return next({ path: '/login', query: { returnUrl: to.fullPath } })
+        }
     }
-  }
-
-  //Route does not require auth
-  return next()
+    if (!to.meta.requiresAuth) {
+        return next()
+    }
+    if (!auth.accessToken) {
+        return next({ path: '/login', query: { returnUrl: to.fullPath } })
+    }
+    if (auth.user) {
+        return next()
+    }
+    try {
+        await auth.getMe()
+        return next()
+    } catch {
+        return next({ path: '/login', query: { returnUrl: to.fullPath } })
+    }
 })
 
 export default router
