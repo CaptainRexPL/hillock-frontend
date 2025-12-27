@@ -26,7 +26,7 @@
           <ul class="navbar-nav me-3">
             <li class="nav-item dropdown" ref="userDropdown">
               <button
-                  class="nav-link dropdown-toggle btn btn-link"
+                  class="nav-link dropdown-toggle btn btn-link min-w-btn"
                   type="button"
                   @click="toggleDropdown"
                   :aria-expanded="isOpen.toString()"
@@ -108,4 +108,5 @@ function handleClickOutside(event) {
 #app {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
+.min-w-btn { min-width: 8.5em; }
 </style>

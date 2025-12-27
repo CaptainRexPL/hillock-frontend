@@ -91,6 +91,7 @@ export const useAuthStore = defineStore('auth', {
         const res = await profileApi.unlink()
         if (res.status === 204) {
           console.log('Unlinked discord account')
+          await this.getMe();
           return true
         }
       } catch (err) {

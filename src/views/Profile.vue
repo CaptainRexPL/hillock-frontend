@@ -180,7 +180,6 @@ import {useAuthStore} from '../stores/useAuthStore'
 import { profileApi } from '../api/profile'
 
 const auth = useAuthStore()
-const user = ref(null)
 
 const editing = reactive({username: false, email: false})
 const editValues = reactive({username: '', email: ''})
@@ -213,11 +212,13 @@ function showErrorToast(message) {
   setTimeout(() => showToast.value = false, 5000)
 }
 
+const user = computed(() => auth.user ?? null)
+
 onMounted(async () => {
   await auth.getMe()
-  if (auth.user) {
+  if (user.value) {
     //console.log('profile-on-mounted', auth.user)
-    user.value = auth.user
+    //user.value = auth.user
     editValues.username = user.value.username
     editValues.email = user.value.email
   }
@@ -242,10 +243,7 @@ function linkDiscordAccount() {
 
 
 async function unlinkDiscord() {
-  if (await auth.unlinkDiscordAccount()) {
-    await auth.getMe()
-    user.value = auth.user
-  }
+  await auth.unlinkDiscordAccount();
 }
 
 async function confirmLogout() {
@@ -259,7 +257,6 @@ async function saveEdit(field) {
     const res = await auth.updateProfile(payload)
     if (res.data?.success === true) {
       editing[field] = false
-      user.value = auth.user
       showSuccessToast(`${field.charAt(0).toUpperCase() + field.slice(1)} updated successfully`)
 
       if (field === 'email') {
